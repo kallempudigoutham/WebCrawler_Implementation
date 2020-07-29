@@ -4,16 +4,23 @@ from urllib import parse
 
 # Class inherits HTMLParser
 class LinkFinder(HTMLParser):
-    def __init__(self):
+    def __init__(self, base_url, page_url):
         super().__init__()
+        self.base_url = base_url
+        self.page_url = page_url
+        self.links = set()
 
     def handle_starttag(self, tag, attrs):
-        print(tag)
+        # 'a' tag has all the links to be crawled
+        if tag == 'a':
+            for (attribute, value) in attrs:
+                if attribute == 'href':
+                    # sometimes relative urls come and so we are adding base_url to it
+                    url = parse.urljoin(self.base_url, value)
+                    self.links.add(url)
+
+    def page_links(self):
+        return self.links
 
     def error(self, message):
         pass
-
-
-finder = LinkFinder()
-finder.feed('<html><head><title>Test</title></head>'
-            '<body><h1>Parse Me!</h1></body></html>')
