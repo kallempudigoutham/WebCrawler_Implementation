@@ -38,3 +38,19 @@ def append_to_file(path, data):
 def delete_file_contents(path):
     with open(path, 'w'):
         pass
+
+
+# Read a file and add each line into a set
+def file_to_set(file_name):
+    results = set()
+    with open(file_name, 'rt') as f:
+        for line in f:
+            results.add(line.replace('\n', ''))
+    return results
+
+
+# Iterate through the set and add each item to the file
+def set_to_file(links, file_name):
+    delete_file_contents(file_name)
+    for link in sorted(links):
+        append_to_file(file_name, link)
