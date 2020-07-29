@@ -31,7 +31,7 @@ def write_file(path, data):
 # Add data to existing file
 def append_to_file(path, data):
     with open(path, 'a') as file:
-        file.write(data, '\n')
+        file.write(data + '\n')
 
 
 # Delete the contents of a file
